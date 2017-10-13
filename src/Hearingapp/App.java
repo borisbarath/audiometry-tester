@@ -23,7 +23,10 @@ public class App {
     GridLayout grid = new GridLayout(4,2, 4,4);
     centerPanel.setLayout(grid);
 
-    readData(loss500, "/500.txt");
+    readData(loss500, "500.txt");
+    readData(loss1k, "1000.txt");
+    readData(loss2k, "2000.txt");
+    readData(loss4k, "4000.txt");
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(600, 500);
