@@ -4,6 +4,8 @@ import static Hearingapp.Utils.readData;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,10 @@ public class App {
 	private JComboBox<Double> right2k;
 	private JComboBox<Double> right4k;
 
+	private JButton ok;
+
+	private JTextField res;
+
 	public void run() {
 		//Sets up and populates the application window
 		frame.getContentPane().add(BorderLayout.CENTER, centerPanel);
@@ -43,10 +49,21 @@ public class App {
 		loss4k = readData("4000.txt");
 
 		setupInterface();
+		setupFunctionality();
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(400, 300);
 		frame.setVisible(true);
+	}
+
+	private void setupFunctionality(){
+		ok.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Button Clicked");
+				res.setText("VALUE HERE");
+			}
+		});
 	}
 
 	private void setupInterface() {
@@ -100,13 +117,14 @@ public class App {
 		}
 
 		//OK button to submit values
-		JButton ok = new JButton("OK");
+		ok = new JButton("OK");
 		c.gridx = 2;
 		c.gridy = 5;
 		centerPanel.add(ok, c);
 
 		//Overall result text field
-		JTextField res = new JTextField("Result");
+		res = new JTextField("Result");
+		res.setEditable(false);
 		c.gridx = 1;
 		c.gridy = 6;
 		c.gridwidth = 3;
