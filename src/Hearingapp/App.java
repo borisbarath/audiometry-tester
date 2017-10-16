@@ -6,24 +6,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class App {
+public class App implements ActionListener {
+
+  //Results from combo boxes for building the ears
+  private Double res500, res1k, res2k, res4k;
 
   //Main frame and panel which contains the result
   private JFrame frame = new JFrame();
   private JPanel centerPanel = new JPanel(new GridBagLayout());
   private GridBagConstraints c = new GridBagConstraints();
 
-  //User-input lists for Fowler's algorithm
-  protected Double[] loss500, loss1k, loss2k, loss4k;
-
   //list of values for dropdown boxes
-  private Integer[] decibel = {10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95};
+  private Integer[] decibel = {10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90,
+      95};
+
+  //User-input lists for Fowler's algorithm
+  protected static Double[] loss500, loss1k, loss2k, loss4k;
 
   //combo boxes for the left ear
   private JComboBox<Integer> left500, left1k, left2k, left4k;
+
 
   //combo boxes for the right ear
   private JComboBox<Integer> right500, right1k, right2k, right4k;
@@ -60,16 +66,17 @@ public class App {
       @Override
       public void actionPerformed(ActionEvent e) {
         System.out.println("Values Submitted");
-        res.setText("VALUE HERE");
-        Ear left = new Ear((int) left500.getSelectedItem(),
-            (int) left1k.getSelectedItem(),
-            (int) left2k.getSelectedItem());
-
-        Ear right = new Ear((int) right500.getSelectedItem(),
-            (int) right1k.getSelectedItem(),
-            (int) right2k.getSelectedItem());
-        right.getLossThisEar() < left.getLossThisEar() ?
-
+        System.out.println(left500.getSelectedIndex());
+//        Ear left = new Ear((int) left500.getSelectedItem(),
+//            (int) left1k.getSelectedItem(),
+//            (int) left2k.getSelectedItem(),
+//            (int) left4k.getSelectedItem());
+//
+//        Ear right = new Ear((int) right500.getSelectedItem(),
+//            (int) right1k.getSelectedItem(),
+//            (int) right2k.getSelectedItem(),
+//            (int) right4k.getSelectedItem());
+        //right.getLossThisEar() < left.getLossThisEar() ? x : y
       }
     });
   }
@@ -85,6 +92,8 @@ public class App {
     //Combo box setup
     for (int i = 0; i < 8; i++) {
       boxes[i] = new JComboBox<>(decibel);
+      boxes[i].addActionListener(this);
+      boxes[i].setName(labels[i % 4]);
       if (i < 4) {
         c.gridx = 1;
       } else {
@@ -139,5 +148,11 @@ public class App {
     c.gridwidth = 3;
     c.fill = GridBagConstraints.HORIZONTAL;
     centerPanel.add(res, c);
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    JComboBox<Integer> cb = (JComboBox) e.getSource();
+    int res = cb.getSelectedIndex();
+    System.out.println(res);
   }
 }
