@@ -30,19 +30,4 @@ public class Utils {
     return 0.0;
   }
 
-  protected static Double getCorrespondingValue(Frequency freq, int decibel) {
-
-    int index = (decibel - 10) / 5;
-    //get corresponding loss percentage from the input-lists
-    switch (freq) {
-      case F500:
-        return App.loss500[index];
-      case F1000:
-        return App.loss1k[index];
-      case F2000:
-        return App.loss2k[index];
-      default:
-        return App.loss4k[index];
-    }
-  }
 }
