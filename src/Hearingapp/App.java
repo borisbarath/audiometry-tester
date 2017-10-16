@@ -80,10 +80,10 @@ public class App implements ActionListener {
 
     //lists for easier generation of items
     String[] boxnames = {"left500", "left1k", "left2k", "left4k",
-                         "right500", "right1k", "right2k", "right4k"};
+        "right500", "right1k", "right2k", "right4k"};
 
     JComboBox[] boxes = {left500, left1k, left2k, left4k,
-                         right500, right1k, right2k, right4k};
+        right500, right1k, right2k, right4k};
 
     int[] yCoords = {1, 2, 3, 4};
     Double[][] lists = {loss500, loss1k, loss2k, loss4k};
@@ -154,7 +154,7 @@ public class App implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     JComboBox<Integer> cb = (JComboBox) e.getSource();
     int index = cb.getSelectedIndex();
-    switch(cb.getName()){
+    switch (cb.getName()) {
       case "left500":
         l5 = loss500[index];
         break;
