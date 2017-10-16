@@ -94,6 +94,7 @@ public class App implements ActionListener {
       boxes[i] = new JComboBox<>(decibel);
       boxes[i].setName(boxnames[i]);
       boxes[i].addActionListener(this);
+      boxes[i].setSelectedIndex(0);
       if (i < 4) {
         c.gridx = 1;
       } else {
