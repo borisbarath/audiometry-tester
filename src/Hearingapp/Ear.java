@@ -2,7 +2,7 @@ package Hearingapp;
 
 public class Ear {
 
-  private int freq500hz, freq1000hz, freq2000hz;
+  private Double freq500hz, freq1000hz, freq2000hz;
 
 
   public Ear(int freq500hz, int freq1000hz, int freq2000hz) {

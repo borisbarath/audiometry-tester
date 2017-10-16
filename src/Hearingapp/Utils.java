@@ -27,4 +27,12 @@ public class Utils {
     }
     return array;
   }
+
+  protected static Double calculateEar(Integer e500, Integer e1k, Integer e2k, Integer e4k){
+    return 0.0;
+  }
+
+  protected static Double getCorrespondingValue(){
+    return 0.0;
+  }
 }
