@@ -73,12 +73,14 @@ public class App implements ActionListener {
         Ear right = new Ear(r5, r1, r2, r4);
 
         System.out.print("Left : ");
-        System.out.print(left.getTotalLoss(right));
+        System.out.print(left.getLossThisEar());
         System.out.println("%");
 
         System.out.print("Right: ");
-        System.out.print(right.getTotalLoss(left));
+        System.out.print(right.getLossThisEar());
         System.out.println("%");
+
+        res.setText(new String(left.getTotalLoss(right) + "%"));
       }
     });
   }

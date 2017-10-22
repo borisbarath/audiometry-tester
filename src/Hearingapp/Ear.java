@@ -15,13 +15,13 @@ private Double freq500hz, freq1000hz, freq2000hz, freq4000hz;
 	  return (freq500hz + freq1000hz + freq2000hz + freq4000hz);
   }
 
-  public Double getTotalLoss(Ear nextEar) {
+  public float getTotalLoss(Ear nextEar) {
     Double oneLoss = getLossThisEar();
     Double twoLoss = nextEar.getLossThisEar();
     if(oneLoss > twoLoss) {
-      return ((oneLoss - twoLoss) / 4.0) + twoLoss;
+      return (Math.round((((oneLoss - twoLoss) / 4.0) + twoLoss)*1000)/ 1000);
     } else {
-      return ((twoLoss - oneLoss) / 4.0) + oneLoss;
+      return (Math.round((((twoLoss - oneLoss) / 4.0) + oneLoss)*1000)/ 1000);
     }
   } 
 }
