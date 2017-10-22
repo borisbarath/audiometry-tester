@@ -21,8 +21,8 @@ public class App implements ActionListener {
   private GridBagConstraints c = new GridBagConstraints();
 
   //list of values for dropdown boxes
-  private Integer[] decibel = {10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90,
-      95};
+  private Integer[] decibel = {10, 15, 20, 25, 30, 35, 40, 45, 50,
+                               55, 60, 65, 70, 75, 80, 85, 90, 95};
 
   //loss percentage values
   private Double l5, l1, l2, l4, r5, r1, r2, r4;
@@ -68,10 +68,17 @@ public class App implements ActionListener {
       @Override
       public void actionPerformed(ActionEvent e) {
         System.out.println("Values Submitted");
-        System.out.println(l5);
 
         Ear left = new Ear(l5, l1, l2, l4);
         Ear right = new Ear(r5, r1, r2, r4);
+
+        System.out.print("Left : ");
+        System.out.print(left.getTotalLoss(right));
+        System.out.println("%");
+
+        System.out.print("Right: ");
+        System.out.print(right.getTotalLoss(left));
+        System.out.println("%");
       }
     });
   }
