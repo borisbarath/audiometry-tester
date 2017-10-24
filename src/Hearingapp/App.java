@@ -1,24 +1,17 @@
 package Hearingapp;
 
-import static Hearingapp.Utils.readData;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class App implements ActionListener {
-
-  //Results from combo boxes for building the ears
-  private Double res500, res1k, res2k, res4k;
 
   //Main frame and panel which contains the result
   private JFrame frame = new JFrame();
   private JPanel centerPanel = new JPanel(new GridBagLayout());
   private GridBagConstraints c = new GridBagConstraints();
+  private Utils u = new Utils();
 
   //list of values for dropdown boxes
   private Integer[] decibel = {10, 15, 20, 25, 30, 35, 40, 45, 50,
@@ -26,9 +19,6 @@ public class App implements ActionListener {
 
   //loss percentage values
   private Double l5, l1, l2, l4, r5, r1, r2, r4;
-
-  //User-input lists for Fowler's algorithm
-  protected static Double[] loss500, loss1k, loss2k, loss4k;
 
   //combo boxes for the left ear
   private JComboBox<Integer> left500, left1k, left2k, left4k;
@@ -46,12 +36,6 @@ public class App implements ActionListener {
     //sets up and populates the application window
     frame.getContentPane().add(BorderLayout.CENTER, centerPanel);
     frame.setTitle("Fowler Hearing Loss");
-
-    //read specified values
-    loss500 = readData("500.txt");
-    loss1k = readData("1000.txt");
-    loss2k = readData("2000.txt");
-    loss4k = readData("4000.txt");
 
     //self-explanatory
     setupInterface();
@@ -95,7 +79,7 @@ public class App implements ActionListener {
         right500, right1k, right2k, right4k};
 
     int[] yCoords = {1, 2, 3, 4};
-    Double[][] lists = {loss500, loss1k, loss2k, loss4k};
+    Double[][] lists = {u.loss500, u.loss1k, u.loss2k, u.loss4k};
     String[] labels = {" 500", "1000", "2000", "4000"};
 
     //Combo box setup with names, listener and positions
@@ -166,28 +150,28 @@ public class App implements ActionListener {
     int index = cb.getSelectedIndex();
     switch (cb.getName()) {
       case "left500":
-        l5 = loss500[index];
+        l5 = u.loss500[index];
         break;
       case "left1k":
-        l1 = loss1k[index];
+        l1 = u.loss1k[index];
         break;
       case "left2k":
-        l2 = loss2k[index];
+        l2 = u.loss2k[index];
         break;
       case "left4k":
-        l4 = loss4k[index];
+        l4 = u.loss4k[index];
         break;
       case "right500":
-        r5 = loss500[index];
+        r5 = u.loss500[index];
         break;
       case "right1k":
-        r1 = loss1k[index];
+        r1 = u.loss1k[index];
         break;
       case "right2k":
-        r2 = loss2k[index];
+        r2 = u.loss2k[index];
         break;
       case "right4k":
-        r4 = loss4k[index];
+        r4 = u.loss4k[index];
         break;
     }
   }

@@ -1,31 +1,17 @@
 package Hearingapp;
 
-import java.io.*;
-import java.util.Scanner;
-
 public class Utils {
 
-protected static Double[] readData(String path) {
-	Double[] array = new Double[18];
-	//Read txt file into array
-	File file = new File(path);
-	try {
-		Scanner scanner = new Scanner(file);
-		String line = scanner.nextLine();
-		String[] words = line.split(" ");
+	protected Double[] loss500 = {0.2, 0.5, 1.1, 1.8, 2.6, 3.7, 4.9, 6.4, 7.9,
+			                9.6, 11.3, 12.8, 13.8, 14.6, 14.8, 14.9, 15.0, 15.0 };
 
-		for (int i = 0; i < 18; i++) {
-			array[i] = Double.parseDouble(words[i]);
-		}
+	protected Double[] loss1k = {0.3, 0.9, 2.1, 3.6, 5.4, 7.7, 10.2, 13.0,
+			      15.7, 19.0, 21.5, 23.5, 25.5, 27.2, 28.8, 29.8, 29.9, 30.0 };
 
-	} catch (FileNotFoundException e) {
-		e.printStackTrace();
-	}
-	return array;
-}
+	protected Double[] loss2k = {0.4, 1.3, 2.9, 4.9, 7.2, 9.8, 12.9, 17.3, 22.4,
+			       25.7, 28.0, 30.2, 32.2, 34.0, 35.8, 37.5, 39.2, 40.0 };
 
-protected static Double calculateEar(Integer e500, Integer e1k, Integer e2k, Integer e4k) {
-	return 0.0;
-}
+	protected Double[] loss4k = {0.1, 0.3, 0.9, 1.7, 2.7, 3.8, 5.0, 6.4, 8.0, 9.7,
+			               11.2, 12.5, 13.5, 14.2, 14.6, 14.8, 14.9, 15.0 };
 
 }
