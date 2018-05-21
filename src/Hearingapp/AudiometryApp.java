@@ -5,20 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class App implements ActionListener {
+public class AudiometryApp implements ActionListener {
 
   //Main frame and panel which contains the result
   private JFrame frame = new JFrame();
   private JPanel centerPanel = new JPanel(new GridBagLayout());
   private GridBagConstraints c = new GridBagConstraints();
-  private Utils u = new Utils();
+  private AppData appData = new AppData();
 
-  //list of values for dropdown boxes
-  private Integer[] decibel = {10, 15, 20, 25, 30, 35, 40, 45, 50,
-                               55, 60, 65, 70, 75, 80, 85, 90, 95};
 
-  //loss percentage values
-  private Double l5, l1, l2, l4, r5, r1, r2, r4;
 
   //combo boxes for the left ear
   private JComboBox<Integer> left500, left1k, left2k, left4k;
@@ -26,11 +21,18 @@ public class App implements ActionListener {
   //combo boxes for the right ear
   private JComboBox<Integer> right500, right1k, right2k, right4k;
 
+
+  JComboBox[] boxes = {left500, left1k, left2k, left4k,
+      right500, right1k, right2k, right4k};
+
+
   //submit button
   private JButton ok;
 
   //result text field
   private JTextField res;
+  private JLabel rightEarLabel;
+  private JLabel leftEarLabel;
 
   public void run() {
     //sets up and populates the application window
@@ -48,44 +50,35 @@ public class App implements ActionListener {
   }
 
   private void setupFunctionality() {
-    ok.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        System.out.println("Values Submitted");
+    ok.addActionListener(e -> {
+      System.out.println("Values Submitted");
 
-        Ear left = new Ear(l5, l1, l2, l4);
-        Ear right = new Ear(r5, r1, r2, r4);
+      EarCalculator calc = new FowlerLossCalculator();
 
-        System.out.print("Left : ");
-        System.out.print(left.getLossThisEar());
-        System.out.println("%");
+      EarModel left = new EarModel(appData.getL5(), appData.getL1(), appData.getL2(), appData.getL4(), calc);
 
-        System.out.print("Right: ");
-        System.out.print(right.getLossThisEar());
-        System.out.println("%");
+      EarModel right = new EarModel(appData.getR5(), appData.getR1(), appData.getR2(), appData.getR4(), calc);
 
-        res.setText(new String(left.getTotalLoss(right) + "%"));
-      }
+      System.out.print("Left : ");
+      System.out.print(left.getValueThisEar());
+      System.out.println("%");
+
+      System.out.print("Right: ");
+      System.out.print(right.getValueThisEar());
+      System.out.println("%");
+
+      res.setText(left.getTotalValue(right) + "%");
     });
   }
 
   private void setupInterface() {
 
-    //lists for easier generation of items
-    String[] boxnames = {"left500", "left1k", "left2k", "left4k",
-        "right500", "right1k", "right2k", "right4k"};
-
-    JComboBox[] boxes = {left500, left1k, left2k, left4k,
-        right500, right1k, right2k, right4k};
-
     int[] yCoords = {1, 2, 3, 4};
-    Double[][] lists = {u.loss500, u.loss1k, u.loss2k, u.loss4k};
-    String[] labels = {" 500", "1000", "2000", "4000"};
 
     //Combo box setup with names, listener and positions
     for (int i = 0; i < 8; i++) {
-      boxes[i] = new JComboBox<>(decibel);
-      boxes[i].setName(boxnames[i]);
+      boxes[i] = new JComboBox<>(appData.getDecibel());
+      boxes[i].setName(appData.getBoxnames()[i]);
       boxes[i].addActionListener(this);
       boxes[i].setSelectedIndex(0);
       if (i < 4) {
@@ -98,19 +91,19 @@ public class App implements ActionListener {
     }
 
     //Labels for ears
-    JLabel left = new JLabel("Left Ear");
+    leftEarLabel = new JLabel("Left EarModel");
     c.gridx = 1;
     c.gridy = 0;
-    centerPanel.add(left, c);
+    centerPanel.add(leftEarLabel, c);
 
-    JLabel right = new JLabel("Right Ear");
+    rightEarLabel = new JLabel("Right EarModel");
     c.gridx = 3;
     c.gridy = 0;
-    centerPanel.add(right, c);
+    centerPanel.add(rightEarLabel, c);
 
     //Set up labels for comboboxes
     for (int i = 0; i < 8; i++) {
-      JLabel label = new JLabel(labels[i % 4]);
+      JLabel label = new JLabel(appData.getLabels()[i % 4]);
       if (i < 4) {
         c.gridx = 0;
       } else {
@@ -150,28 +143,27 @@ public class App implements ActionListener {
     int index = cb.getSelectedIndex();
     switch (cb.getName()) {
       case "left500":
-        l5 = u.loss500[index];
+        appData.setL5(appData.loss500[index]);
         break;
       case "left1k":
-        l1 = u.loss1k[index];
-        break;
+        appData.setL1(appData.loss1k[index]);
       case "left2k":
-        l2 = u.loss2k[index];
+        appData.setL2(appData.loss2k[index]);
         break;
       case "left4k":
-        l4 = u.loss4k[index];
+        appData.setL4(appData.loss4k[index]);
         break;
       case "right500":
-        r5 = u.loss500[index];
+        appData.setR5(appData.loss500[index]);
         break;
       case "right1k":
-        r1 = u.loss1k[index];
+        appData.setR1(appData.loss1k[index]);
         break;
       case "right2k":
-        r2 = u.loss2k[index];
+        appData.setR2(appData.loss2k[index]);
         break;
       case "right4k":
-        r4 = u.loss4k[index];
+        appData.setR4(appData.loss4k[index]);
         break;
     }
   }
